@@ -51,6 +51,7 @@ namespace SecureNotesPlugin
 			m_host = host;
 
 			m_prov = new SecureNotesPluginProv();
+            
 			m_host.ColumnProviderPool.Add(m_prov);
 
 			return true;

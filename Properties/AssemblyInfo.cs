@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SecureNotesPlugin")]
-[assembly: AssemblyDescription("Provides a column that allows to change the background color of entries.")]
+[assembly: AssemblyDescription("TODO")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Dominik Reichl")]
+[assembly: AssemblyCompany("otapiGems")]
 [assembly: AssemblyProduct("KeePass Plugin")]
-[assembly: AssemblyCopyright("Copyright © 2015 Dominik Reichl")]
+[assembly: AssemblyCopyright("Copyright © 2017 otapiGems")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

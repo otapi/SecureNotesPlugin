@@ -8,8 +8,8 @@
     <ProjectGuid>{1A380CB5-B4DB-40C3-8348-64CD2597E78E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ColorChangeColumn</RootNamespace>
-    <AssemblyName>ColorChangeColumn</AssemblyName>
+    <RootNamespace>SecureNotesPlugin</RootNamespace>
+    <AssemblyName>SecureNotesPlugin</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -52,7 +52,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="KeePass">
-      <HintPath>..\..\..\Program Files (x86)\KeePass Password Safe 2\KeePass.exe</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\KeePass Password Safe 2\KeePass.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
