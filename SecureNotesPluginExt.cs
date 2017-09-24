@@ -32,11 +32,24 @@ using KeePassLib;
 
 namespace SecureNotesPlugin
 {
-	public sealed class SecureNotesPluginExt : Plugin
+	public sealed partial class SecureNotesPluginExt : Plugin
 	{
 		private SecureNotesPluginProv m_prov = null;
 
-		private static IPluginHost m_host = null;
+        //private const string m_ctseName = "m_toolMain";
+        private const string m_clveName = "m_lvEntries";
+        //private const string m_ctveName = "m_tvGroups";
+        //private const string m_csceName = "m_splitVertical";
+
+        //public static CustomToolStripEx m_toolMain = null;
+        public static CustomListViewEx m_lvEntries = null;
+        //public static CustomTreeViewEx m_tvGroups = null;
+        //private CustomSplitContainerEx m_csceSplitVertical = null;
+
+        // Declaration Sub Plugins
+
+
+        private static IPluginHost m_host = null;
 		internal static IPluginHost Host
 		{
 			get { return m_host; }
@@ -52,8 +65,10 @@ namespace SecureNotesPlugin
            
 
 			m_prov = new SecureNotesPluginProv();
-            
-			m_host.ColumnProviderPool.Add(m_prov);
+
+            m_lvEntries = (CustomListViewEx)Util.FindControlRecursive(m_host.MainWindow, m_clveName);
+            m_lvEntries.CheckBoxes = true;
+            m_host.ColumnProviderPool.Add(m_prov);
 
 			return true;
 		}
