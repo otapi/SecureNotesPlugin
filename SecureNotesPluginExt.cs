@@ -44,11 +44,12 @@ namespace SecureNotesPlugin
 
 		public override bool Initialize(IPluginHost host)
 		{
-			Terminate();
+			//Terminate();
 
-			if(host == null) return false;
+			//if(host == null) return false;
 
 			m_host = host;
+           
 
 			m_prov = new SecureNotesPluginProv();
             
