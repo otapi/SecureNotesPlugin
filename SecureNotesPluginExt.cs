@@ -34,19 +34,19 @@ namespace SecureNotesPlugin
 {
 	public sealed partial class SecureNotesPluginExt : Plugin
 	{
-		private SecureNotesPluginProv m_prov = null;
-
-        //private const string m_ctseName = "m_toolMain";
+		
+        private const string m_ctseName = "m_toolMain";
         private const string m_clveName = "m_lvEntries";
         //private const string m_ctveName = "m_tvGroups";
         //private const string m_csceName = "m_splitVertical";
 
-        //public static CustomToolStripEx m_toolMain = null;
+        public static CustomToolStripEx m_toolMain = null;
         public static CustomListViewEx m_lvEntries = null;
         //public static CustomTreeViewEx m_tvGroups = null;
         //private CustomSplitContainerEx m_csceSplitVertical = null;
 
-        // Declaration Sub Plugins
+        // Declaration Sub Classes
+        private static StatusToolbar statusToolbar;
 
 
         private static IPluginHost m_host = null;
@@ -57,87 +57,31 @@ namespace SecureNotesPlugin
 
 		public override bool Initialize(IPluginHost host)
 		{
-			//Terminate();
+			Terminate();
 
-			//if(host == null) return false;
+			if(host == null) return false;
 
 			m_host = host;
-           
 
-			m_prov = new SecureNotesPluginProv();
+            // Find the main controls 
+            m_toolMain = (CustomToolStripEx)Util.FindControlRecursive(m_host.MainWindow, m_ctseName);
+            //m_lvEntries = (CustomListViewEx)Util.FindControlRecursive(m_host.MainWindow, m_clveName);
+            //m_tsmiMenuView = (ToolStripMenuItem)Util.FindControlRecursive(m_host.MainWindow, m_tsmiName);
+            //m_tvGroups = (CustomTreeViewEx)Util.FindControlRecursive(m_host.MainWindow, m_ctveName);
+            //m_csceSplitVertical = (CustomSplitContainerEx)Util.FindControlRecursive(m_host.MainWindow, m_csceName);
 
-            m_lvEntries = (CustomListViewEx)Util.FindControlRecursive(m_host.MainWindow, m_clveName);
-            m_lvEntries.CheckBoxes = true;
-
-            m_host.CustomConfig.
-            List<AceColumn> l = Program.Config.MainWindow.EntryListColumns;
-            l.Clear();
-
-            foreach (ListViewItem lvi in m_lvColumns.Items)
-            {
-                if (!lvi.Checked) continue;
-
-                AceColumn c = (lvi.Tag as AceColumn);
-                if (c == null) { Debug.Assert(false); continue; }
-
-                l.Add(c);
-            }
-
-            m_host.ColumnProviderPool.Add(m_prov);
-
+            statusToolbar = new StatusToolbar();
+                        
 			return true;
 		}
 
 		public override void Terminate()
 		{
 			if(m_host == null) return;
-
-			m_host.ColumnProviderPool.Remove(m_prov);
-			m_prov = null;
-
+            statusToolbar.Close();			
 			m_host = null;
 		}
 	}
 
-	public sealed class SecureNotesPluginProv : ColumnProvider
-	{
-		private const string ColorColumnName = "Change Color";
 
-		public override string[] ColumnNames
-		{
-			get { return new string[] { ColorColumnName }; }
-		}
-
-		public override string GetCellData(string strColumnName, PwEntry pe)
-		{
-			return string.Empty;
-		}
-
-		public override bool SupportsCellAction(string strColumnName)
-		{
-			return (strColumnName == ColorColumnName);
-		}
-
-		public override void PerformCellAction(string strColumnName, PwEntry pe)
-		{
-			if((strColumnName == ColorColumnName) && (pe != null))
-			{
-				pe.BackgroundColor = Color.FromArgb(
-					Program.GlobalRandom.Next(0, 256),
-					Program.GlobalRandom.Next(0, 256),
-					Program.GlobalRandom.Next(0, 256));
-
-				MainForm mf = SecureNotesPluginExt.Host.MainWindow;
-				mf.UpdateUI(false, null, false, null, true, null, true);
-
-				// Selected items are drawn with a selection color
-				// background; as we want the new background color to
-				// be visible instantly, we deselect the item
-				ListView lv = (mf.Controls.Find("m_lvEntries", true)[0]
-					as ListView);
-				ListViewItem lvi = lv.FocusedItem;
-				if(lvi != null) lvi.Selected = false;
-			}
-		}
-	}
 }
