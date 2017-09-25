@@ -68,6 +68,21 @@ namespace SecureNotesPlugin
 
             m_lvEntries = (CustomListViewEx)Util.FindControlRecursive(m_host.MainWindow, m_clveName);
             m_lvEntries.CheckBoxes = true;
+
+            m_host.CustomConfig.
+            List<AceColumn> l = Program.Config.MainWindow.EntryListColumns;
+            l.Clear();
+
+            foreach (ListViewItem lvi in m_lvColumns.Items)
+            {
+                if (!lvi.Checked) continue;
+
+                AceColumn c = (lvi.Tag as AceColumn);
+                if (c == null) { Debug.Assert(false); continue; }
+
+                l.Add(c);
+            }
+
             m_host.ColumnProviderPool.Add(m_prov);
 
 			return true;
