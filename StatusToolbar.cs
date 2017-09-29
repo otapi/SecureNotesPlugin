@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using KeePass.UI;
 using KeePassLib;
+using KeePassLib.Security;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -69,7 +70,7 @@ namespace SecureNotesPlugin
                     case KNUrgent:
                         foreach (ListViewItem listitem in m_lvEntries.SelectedItems)
                         {
-                            SaveEntryIcon(listitem, (PwIcon)item.Tag, item.Text);
+                            SaveEntryIcon(listitem, (PwIcon)item.Tag, item.ToolTipText);
                         }
                         Util.UpdateSaveState();
                         m_host.MainWindow.Refresh();
@@ -90,7 +91,10 @@ namespace SecureNotesPlugin
                 pe.Touch(true, false); // Touch *after* backup
 
                 pe.IconId = icon;
+                Item.ImageIndex = (int)icon;
 
+                pe.Strings.Set(PwDefs.UserNameField, new ProtectedString(false, text));
+                Item.SubItems[getSubitemOfField(KeePass.App.Configuration.AceColumnType.UserName)].Text = text;
                 /*
                 int colID = SubItem;
                 AceColumn col = GetAceColumn(colID);
@@ -135,8 +139,7 @@ namespace SecureNotesPlugin
                 }
                 */
 
-                // refresh UI
-                Item.ImageIndex = (int)icon;
+
 
                 PwCompareOptions cmpOpt = (PwCompareOptions.IgnoreLastMod | PwCompareOptions.IgnoreLastAccess | PwCompareOptions.IgnoreLastBackup);
                 if (pe.EqualsEntry(peInit, cmpOpt, MemProtCmpMode.None))
@@ -151,6 +154,20 @@ namespace SecureNotesPlugin
                 {
                     return true;
                 }
+            }
+
+            private int getSubitemOfField(KeePass.App.Configuration.AceColumnType field)
+            {
+                for (int i=0;i< KeePass.Program.Config.MainWindow.EntryListColumns.Count;i++)
+                { 
+                    if (KeePass.Program.Config.MainWindow.EntryListColumns[i].Type == KeePass.App.Configuration.AceColumnType.UserName)
+                    {
+                        return i;
+                    }
+
+                }
+                Debug.Assert(false);
+                return -1;
             }
             private System.Windows.Forms.ToolStripItem addItem(string name, string command, string imageName, KeePassLib.PwIcon icon)
             {
