@@ -70,7 +70,7 @@ namespace SecureNotesPlugin
                     case KNUrgent:
                         foreach (ListViewItem listitem in m_lvEntries.SelectedItems)
                         {
-                            SaveEntryIcon(listitem, (PwIcon)item.Tag, item.ToolTipText);
+                            SaveEntryStatus(listitem, (PwIcon)item.Tag, item.ToolTipText);
                         }
                         Util.UpdateSaveState();
                         m_host.MainWindow.Refresh();
@@ -79,7 +79,7 @@ namespace SecureNotesPlugin
                 }
             }
 
-            private bool SaveEntryIcon(ListViewItem Item, PwIcon icon, string text)
+            private bool SaveEntryStatus(ListViewItem Item, PwIcon icon, string text)
             {
                 PwListItem pli = (((ListViewItem)Item).Tag as PwListItem);
                 if (pli == null) { Debug.Assert(false); return false; }
