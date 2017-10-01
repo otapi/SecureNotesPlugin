@@ -1,9 +1,9 @@
-# SecureNotes - a plugin for KeePass
+# KeeNote - a plugin for KeePass
 
 A plugin to keep your notes in a secure place
 
 ## Install ##
-Since this is just a plugin, you should have installed the [KeePass Password Safe v2.xx ('Professional Edition')](http://keepass.info/download.html) first!
+Since this is just a plugin, you should have installed the [KeePass Password Safe 2 ('Professional Edition')](http://keepass.info/download.html) first!
 
 You need to download the PLGX and copy manually it into your KeePass\Plugins folder (e.g. C:\Program Files (x86)\KeePass Password Safe 2\Plugins)
 [You can find the latest stable version here](../../releases/latest)
@@ -25,10 +25,11 @@ Version 1.0 - 170920
 
 - First release
 
-## Special Thanks
+## Special Thanks to
 
-Special thanks to Oleksandr Senyuk for making [KeeSkyDrive](http://sourceforge.net/projects/keeskydrive/) as it has inspired me to create this plugin.
+Frank Glaser for [KPEnhancedListview](https://github.com/betonme/kpenhancedlistview)
 
-otapiGems
-otapiGems@gmail.com
+by
+ otapiGems
+ otapiGems@gmail.com
 

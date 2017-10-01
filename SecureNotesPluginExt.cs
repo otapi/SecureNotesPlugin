@@ -47,7 +47,7 @@ namespace SecureNotesPlugin
 
         // Declaration Sub Classes
         private static StatusToolbar statusToolbar;
-
+        private static InlineEditing inlineEditing;
 
         private static IPluginHost m_host = null;
 		internal static IPluginHost Host
@@ -71,15 +71,17 @@ namespace SecureNotesPlugin
             //m_csceSplitVertical = (CustomSplitContainerEx)Util.FindControlRecursive(m_host.MainWindow, m_csceName);
 
             statusToolbar = new StatusToolbar();
-                        
-			return true;
+            inlineEditing = new InlineEditing();
+
+            return true;
 		}
 
 		public override void Terminate()
 		{
 			if(m_host == null) return;
-            statusToolbar.Close();			
-			m_host = null;
+            statusToolbar.Close();
+            inlineEditing.Close();
+            m_host = null;
 		}
 	}
 
