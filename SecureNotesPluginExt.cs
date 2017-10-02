@@ -49,6 +49,7 @@ namespace SecureNotesPlugin
         private static StatusToolbar statusToolbar;
         private static InlineEditing inlineEditing;
 
+
         private static IPluginHost m_host = null;
 		internal static IPluginHost Host
 		{
@@ -66,21 +67,39 @@ namespace SecureNotesPlugin
             // Find the main controls 
             m_toolMain = (CustomToolStripEx)Util.FindControlRecursive(m_host.MainWindow, m_ctseName);
             m_lvEntries = (CustomListViewEx)Util.FindControlRecursive(m_host.MainWindow, m_clveName);
+            m_lvEntries.ListViewItemSorter = new CompareByIndex(m_lvEntries);
             //m_tsmiMenuView = (ToolStripMenuItem)Util.FindControlRecursive(m_host.MainWindow, m_tsmiName);
             //m_tvGroups = (CustomTreeViewEx)Util.FindControlRecursive(m_host.MainWindow, m_ctveName);
             //m_csceSplitVertical = (CustomSplitContainerEx)Util.FindControlRecursive(m_host.MainWindow, m_csceName);
 
             statusToolbar = new StatusToolbar();
             inlineEditing = new InlineEditing();
-
+ 
             return true;
 		}
 
-		public override void Terminate()
+        class CompareByIndex : System.Collections.IComparer
+        {
+            private readonly ListView _listView;
+
+            public CompareByIndex(CustomListViewEx listView)
+            {
+                this._listView = listView;
+            }
+            public int Compare(object x, object y)
+            {
+                int i = this._listView.Items.IndexOf((ListViewItem)x);
+                int j = this._listView.Items.IndexOf((ListViewItem)y);
+                return i - j;
+            }
+        }
+
+        public override void Terminate()
 		{
 			if(m_host == null) return;
             statusToolbar.Close();
             inlineEditing.Close();
+
             m_host = null;
 		}
 	}

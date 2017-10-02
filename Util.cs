@@ -502,6 +502,11 @@ namespace SecureNotesPlugin
             }
 
             // Ported from KeePass Mainform_functions AddEntriesToList
+            /// <summary>
+            /// Add entry to the main ListView to the end of the list
+            /// </summary>
+            /// <param name="pe">Entry</param>
+            /// <returns></returns>
             internal static ListViewItem AddEntryToList(PwEntry pe)
             {
                 if (pe == null) { Debug.Assert(false); return null; }
@@ -539,10 +544,11 @@ namespace SecureNotesPlugin
                 ListViewItem lvi = SetListEntry(pe, null);
 
                 //Debug.Assert(lvseCachedState.CompareTo(m_lvEntries));
-
+                
+                m_lvEntries.BeginUpdate();
                 m_lvEntries.Items.Add(lvi);
-                //m_lvEntries.Items.Insert(iIndex, lvi);
-
+                
+                m_lvEntries.EndUpdate();
                 UIUtil.SetAlternatingBgColors(m_lvEntries, m_clrAlternateItemBgColor,
                     Program.Config.MainWindow.EntryListAlternatingBgColors);
 

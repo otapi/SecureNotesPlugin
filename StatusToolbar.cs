@@ -14,24 +14,34 @@ namespace SecureNotesPlugin
         
         class StatusToolbar
         {
+
             public const string KNAddNew = "KNAddNew";
             public const string KNToDo = "KNToDo";
             public const string KNUrgent = "KNUrgent";
             public const string KNInProgress = "KNInProgress";
             public const string KNDone = "KNDone";
-            
+
+            public const string KNUp = "KNUP";
+            public const string KNDOWN = "KNDown";
+
+            public const string KNToDoStr = "To Do";
+
             new List<System.Windows.Forms.ToolStripItem> toolbarItems;
+            
+
             public StatusToolbar()
             {
                 toolbarItems = new List<System.Windows.Forms.ToolStripItem>()
                 {
                     new System.Windows.Forms.ToolStripSeparator(),
                     addItem(KNAddNew, "Add new note", "B16x16_KOrganizer", PwIcon.Apple),
+
                     new System.Windows.Forms.ToolStripSeparator(),
-                    addItem(KNToDo, "To do", "B16x16_KNotes", PwIcon.Note),
+                    addItem(KNToDo, KNToDoStr, "B16x16_KNotes", PwIcon.Note),
                     addItem(KNUrgent, "Urgent", "B16x16_WinFavs", PwIcon.Star),
                     addItem(KNInProgress, "In progress", "B16x16_Package_Development", PwIcon.Tool),
                     addItem(KNDone, "Done", "B16x16_Apply", PwIcon.Checked),
+
 
                 };
                 m_toolMain.Items.AddRange(toolbarItems.ToArray());
@@ -59,6 +69,11 @@ namespace SecureNotesPlugin
                 switch (item.Name)
                 {
                     case KNAddNew:
+                        AddNewNote();
+                        break;
+                    case KNUp:
+                    case KNDOWN:
+                        //moveItems(item.Name == KNUp ? -1 : 1);
                         break;
                     case KNDone:
                     case KNInProgress:
@@ -143,6 +158,51 @@ namespace SecureNotesPlugin
                 item.Click += new System.EventHandler(this.StatusButtonHandler);
 
                 return item;
+            }
+
+            private void AddNewNote()
+            {
+                PwGroup pg = KeePass.Program.MainForm.GetSelectedGroup();
+                
+                // Create new entry which belongs to given group
+                PwEntry pwe = Util.CreateEntry(pg);
+
+                if (pwe == null) { return; }
+
+                // Insort is only working in not sorted and not grouped listviews
+                //ListViewItem lviFocus = Util.InsertListEntry(pwe, iIndex);
+                pwe.IconId = PwIcon.Note;
+                pwe.Strings.Set(PwDefs.UserNameField, new ProtectedString(false, KNToDoStr));
+                ListViewItem lviFocus = Util.AddEntryToList(pwe);
+
+                lviFocus = Util.GuiFindEntry(pwe.Uuid);
+                if (lviFocus != null) m_lvEntries.FocusedItem = lviFocus;
+
+                m_host.MainWindow.EnsureVisibleEntry(pwe.Uuid);
+                m_host.MainWindow.RefreshEntriesList();
+                Util.UpdateSaveState();
+
+                //PwObjectList<PwEntry> vSelect = new PwObjectList<PwEntry>();
+                //vSelect.Add(pwe);
+                //Util.SelectEntries(vSelect, true, true);
+
+                m_lvEntries.Select();
+                m_lvEntries.HideSelection = false;
+                m_lvEntries.Focus();
+                //MAYBE problem: ListView row is only focused but not highlighted (selected?)
+
+                // Start inline editing with new item
+                if (lviFocus != null)
+                {
+                    inlineEditing.StartEditing(lviFocus);
+                }
+
+                //IDEA: On esc press remove item, undo database changes and update save icon
+            }
+
+            private void moveItems()
+            {
+
             }
             public void Close()
             {
