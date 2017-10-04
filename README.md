@@ -28,7 +28,6 @@ Version 1.0 - 170920
 ## Special Thanks to
 
 Frank Glaser for [KPEnhancedListview](https://github.com/betonme/kpenhancedlistview)
-Hans Passant for [drag & drop items in ListView](https://stackoverflow.com/questions/9443695/how-to-drag-drop-items-in-the-same-listview)
 Alex Vallat for [KPEnhancedEntryView](https://sourceforge.net/projects/kpenhentryview/)
 https://www.red-gate.com/simple-talk/dotnet/net-framework/mixing-wpf-and-winforms/
 https://github.com/AfterbuyAxel/WPF-RichText-Editor

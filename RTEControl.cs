@@ -21,13 +21,7 @@ namespace SecureNotesPlugin
 
         private System.Windows.Forms.TabPage mAllTextTab;
 
-        System.Windows.FontWeight initFontWeight;
-        double initFontSize;
-        System.Windows.FontStyle initFontStyle;
-        System.Windows.Media.SolidColorBrush initBackBrush;
-        System.Windows.Media.SolidColorBrush initForeBrush;
-        System.Windows.Media.FontFamily initFontFamily;
-
+        
         public RTEControl()
         {
             InitializeComponent();
@@ -81,10 +75,18 @@ namespace SecureNotesPlugin
                 Dock = DockStyle.Fill
             };
             panel1.Controls.Add(ctrlHost);
-            wpfRTE = new WpfRichText.RichTextEditor();
+            wpfRTE = new WpfRichText.RichTextEditor()
+            {
+                Background = System.Windows.SystemColors.ControlLightLightBrush,
+                Foreground = System.Windows.SystemColors.ControlTextBrush,
+                BorderThickness = new System.Windows.Thickness(1),
+                BorderBrush = System.Windows.SystemColors.MenuBarBrush
+
+            };
             wpfRTE.InitializeComponent();
             ctrlHost.Child = wpfRTE;
 
         }
+        
     }
 }
