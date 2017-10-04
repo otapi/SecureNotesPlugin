@@ -69,8 +69,10 @@ namespace SecureNotesPlugin
 
         private void RTEControl_Load(object sender, EventArgs e)
         {
-            ctrlHost = new ElementHost();
-            ctrlHost.Dock = DockStyle.Fill;
+            ctrlHost = new ElementHost
+            {
+                Dock = DockStyle.Fill
+            };
             this.Controls.Add(ctrlHost);
             wpfRTE = new RichTextEditor();
             wpfRTE.InitializeComponent();
