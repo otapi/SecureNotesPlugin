@@ -47,6 +47,8 @@
             this.Controls.Add(this.label1);
             this.Name = "RTEControl";
             this.Size = new System.Drawing.Size(531, 391);
+            this.Load += new System.EventHandler(this.RTEControl_Load);
+            this.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.RTEControl_ControlAdded);
             this.ResumeLayout(false);
             this.PerformLayout();
 
