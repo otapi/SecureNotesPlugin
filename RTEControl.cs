@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using KeePass;
 using KeePassLib;
 using System.Windows.Forms.Integration;
-using WpfRichText;
+
 namespace SecureNotesPlugin
 {
     public partial class RTEControl : UserControl
@@ -20,6 +20,13 @@ namespace SecureNotesPlugin
 
 
         private System.Windows.Forms.TabPage mAllTextTab;
+
+        System.Windows.FontWeight initFontWeight;
+        double initFontSize;
+        System.Windows.FontStyle initFontStyle;
+        System.Windows.Media.SolidColorBrush initBackBrush;
+        System.Windows.Media.SolidColorBrush initForeBrush;
+        System.Windows.Media.FontFamily initFontFamily;
 
         public RTEControl()
         {
@@ -73,30 +80,11 @@ namespace SecureNotesPlugin
             {
                 Dock = DockStyle.Fill
             };
-            this.Controls.Add(ctrlHost);
-            wpfRTE = new RichTextEditor();
+            panel1.Controls.Add(ctrlHost);
+            wpfRTE = new WpfRichText.RichTextEditor();
             wpfRTE.InitializeComponent();
             ctrlHost.Child = wpfRTE;
-            
-            /*
-            wpfInputControl.OnButtonClick +=
-                new WPFInputControl.MyControlEventHandler(
-                Panel_OnButtonClick);
-            wpfInputControl.Loaded += new RoutedEventHandler(
-                Panel_Loaded);
-                */
-        }
 
-        private void RTEControl_ControlAdded(object sender, ControlEventArgs e)
-        {
-            /*
-             * initBackBrush = (SolidColorBrush)wpfInputControl.MyControl_Background;
-            initForeBrush = wpfInputControl.MyControl_Foreground;
-            initFontFamily = wpfInputControl.MyControl_FontFamily;
-            initFontSize = wpfInputControl.MyControl_FontSize;
-            initFontWeight = wpfInputControl.MyControl_FontWeight;
-            initFontStyle = wpfInputControl.MyControl_FontStyle;*
-            */
         }
     }
 }
