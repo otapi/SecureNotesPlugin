@@ -26,7 +26,7 @@ namespace SecureNotesPlugin
 
             public const string KNToDoStr = "To Do";
 
-            new List<System.Windows.Forms.ToolStripItem> toolbarItems;
+            List<System.Windows.Forms.ToolStripItem> toolbarItems;
             
 
             public StatusToolbar()
@@ -101,7 +101,8 @@ namespace SecureNotesPlugin
                 PwEntry pe = pli.Entry;
                 pe = m_host.Database.RootGroup.FindEntry(pe.Uuid, true);
 
-                if (!pe.Strings.Get(PwDefs.PasswordField).IsEmpty) {
+                var protString = pe.Strings.Get(PwDefs.PasswordField);
+                if (protString != null && !protString.IsEmpty) {
                     return false;
                 }
 

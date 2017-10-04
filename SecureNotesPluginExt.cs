@@ -48,7 +48,7 @@ namespace SecureNotesPlugin
         // Declaration Sub Classes
         private static StatusToolbar statusToolbar;
         private static InlineEditing inlineEditing;
-
+        private static EntryRichEditor entryRichEditor;
 
         private static IPluginHost m_host = null;
 		internal static IPluginHost Host
@@ -67,6 +67,8 @@ namespace SecureNotesPlugin
             // Find the main controls 
             m_toolMain = (CustomToolStripEx)Util.FindControlRecursive(m_host.MainWindow, m_ctseName);
             m_lvEntries = (CustomListViewEx)Util.FindControlRecursive(m_host.MainWindow, m_clveName);
+
+            // TODO: do we really need this?
             m_lvEntries.ListViewItemSorter = new CompareByIndex(m_lvEntries);
             //m_tsmiMenuView = (ToolStripMenuItem)Util.FindControlRecursive(m_host.MainWindow, m_tsmiName);
             //m_tvGroups = (CustomTreeViewEx)Util.FindControlRecursive(m_host.MainWindow, m_ctveName);
@@ -74,7 +76,7 @@ namespace SecureNotesPlugin
 
             statusToolbar = new StatusToolbar();
             inlineEditing = new InlineEditing();
- 
+            entryRichEditor = new EntryRichEditor();
             return true;
 		}
 
@@ -99,6 +101,7 @@ namespace SecureNotesPlugin
 			if(m_host == null) return;
             statusToolbar.Close();
             inlineEditing.Close();
+            entryRichEditor.Close();
 
             m_host = null;
 		}
