@@ -17,7 +17,8 @@ namespace SecureNotesPlugin
     {
         private ElementHost ctrlHost;
         private WpfRichText.RichTextEditor wpfRTE;
-
+        private DateTime? mEntryLastModificationTime;
+        private PwEntry mEntry;
 
         private System.Windows.Forms.TabPage mAllTextTab;
 
@@ -28,6 +29,67 @@ namespace SecureNotesPlugin
             mAllTextTab = new TabPage();
         }
 
+
+        private void RTEControl_Load(object sender, EventArgs e)
+        {
+            title.Text = "This is a test";
+            ctrlHost = new ElementHost
+            {
+                Dock = DockStyle.Fill
+            };
+            panel2.Controls.Add(ctrlHost);
+            wpfRTE = new WpfRichText.RichTextEditor()
+            {
+                Background = System.Windows.SystemColors.ControlLightLightBrush,
+                Foreground = System.Windows.SystemColors.ControlTextBrush,
+                BorderThickness = new System.Windows.Thickness(1),
+                BorderBrush = System.Windows.SystemColors.MenuBarBrush
+
+            };
+            wpfRTE.InitializeComponent();
+            ctrlHost.Child = wpfRTE;
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void RecordEntryLastModificationTime()
+        {
+            if (mEntry != null)
+            {
+                mEntryLastModificationTime = mEntry.LastModificationTime;
+            }
+            else
+            {
+                mEntryLastModificationTime = null;
+            }
+        }
+        private bool HasEntryBeenModifiedSinceLastModificationTime(PwEntry entry)
+        {
+            return entry == null || entry.LastModificationTime != mEntryLastModificationTime;
+        }
+        /// <summary>
+		/// Gets or sets a single selected entry. Will clear any previous value set to <see cref="Entries"/>
+		/// Returns null if a multiple selection has been set using <see cref="Entries"/>
+		/// </summary>
+		public PwEntry Entry
+        {
+            get { return mEntry; }
+            set
+            {
+                if (value != mEntry || HasEntryBeenModifiedSinceLastModificationTime(value))
+                {
+                    mEntry = value;
+                    
+
+                    RecordEntryLastModificationTime();
+                    OnEntryChanged(EventArgs.Empty);
+                }
+            }
+        }
         public Control AllTextControl
         {
             get { return mAllTextTab.Controls.Cast<Control>().FirstOrDefault(); }
@@ -37,8 +99,6 @@ namespace SecureNotesPlugin
                 mAllTextTab.Controls.Add(value);
             }
         }
-        
-
         public class EntryModifiedEventArgs : EventArgs
         {
             private readonly PwEntry[] mEntries;
@@ -68,25 +128,19 @@ namespace SecureNotesPlugin
             //TODO cancelledit
         }
 
-        private void RTEControl_Load(object sender, EventArgs e)
+        protected virtual void OnEntryChanged(EventArgs e)
         {
-            ctrlHost = new ElementHost
+            
+            if (Entry == null)
             {
-                Dock = DockStyle.Fill
-            };
-            panel1.Controls.Add(ctrlHost);
-            wpfRTE = new WpfRichText.RichTextEditor()
+                panel1.Hide();
+            }
+            else
             {
-                Background = System.Windows.SystemColors.ControlLightLightBrush,
-                Foreground = System.Windows.SystemColors.ControlTextBrush,
-                BorderThickness = new System.Windows.Thickness(1),
-                BorderBrush = System.Windows.SystemColors.MenuBarBrush
-
-            };
-            wpfRTE.InitializeComponent();
-            ctrlHost.Child = wpfRTE;
-
+                panel1.Show();
+                title.Text = mEntry.Strings.Get(PwDefs.TitleField).ReadString();
+            }
         }
-        
+
     }
 }

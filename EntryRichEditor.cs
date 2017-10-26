@@ -178,7 +178,7 @@ namespace SecureNotesPlugin
             }
             private void OnUIStateUpdated(object sender, EventArgs e)
             {
-                
+                mRTEControl.Entry = m_host.MainWindow.GetSelectedEntry(false);
             }
 
             private void OnFileSaving(object sender, FileSavingEventArgs e)
