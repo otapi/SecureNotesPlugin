@@ -54,6 +54,7 @@
             this.title.Name = "title";
             this.title.Size = new System.Drawing.Size(524, 53);
             this.title.TabIndex = 0;
+            this.title.TextChanged += new System.EventHandler(this.title_TextChanged);
             // 
             // panel2
             // 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using KeePass;
 using KeePassLib;
+using KeePassLib.Security;
 using System.Windows.Forms.Integration;
 
 namespace SecureNotesPlugin
@@ -16,7 +17,7 @@ namespace SecureNotesPlugin
     public partial class RTEControl : UserControl
     {
         private ElementHost ctrlHost;
-        private WpfRichText.RichTextEditor wpfRTE;
+        private WpfRichText.RichTextEditor rtfEditor;
         private DateTime? mEntryLastModificationTime;
         private PwEntry mEntry;
 
@@ -38,7 +39,7 @@ namespace SecureNotesPlugin
                 Dock = DockStyle.Fill
             };
             panel2.Controls.Add(ctrlHost);
-            wpfRTE = new WpfRichText.RichTextEditor()
+            rtfEditor = new WpfRichText.RichTextEditor()
             {
                 Background = System.Windows.SystemColors.ControlLightLightBrush,
                 Foreground = System.Windows.SystemColors.ControlTextBrush,
@@ -46,11 +47,14 @@ namespace SecureNotesPlugin
                 BorderBrush = System.Windows.SystemColors.MenuBarBrush
 
             };
-            wpfRTE.InitializeComponent();
-            ctrlHost.Child = wpfRTE;
+            rtfEditor.InitializeComponent();
+            ctrlHost.Child = rtfEditor;
+
+            // TODO: saveEntry on textChange event of rtfEditor
 
         }
 
+        
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
@@ -80,14 +84,49 @@ namespace SecureNotesPlugin
             get { return mEntry; }
             set
             {
-                if (value != mEntry || HasEntryBeenModifiedSinceLastModificationTime(value))
+                if (mEntry != null)
                 {
-                    mEntry = value;
-                    
+                    if (value != null && value.Uuid != mEntry.Uuid)
+                    {
+                        RecordEntryLastModificationTime();
+                        saveEntry();
 
-                    RecordEntryLastModificationTime();
-                    OnEntryChanged(EventArgs.Empty);
+                    }
+
                 }
+
+
+                if (value != null)
+                {
+                    if (mEntry != null && value.Uuid == mEntry.Uuid)
+                    {
+
+                    }
+                    else
+                    {
+                        saveEntry();
+                        mEntry = value;
+                        panel1.Show();
+                        oldTitle = mEntry.Strings.Get(PwDefs.TitleField).ReadString();
+                        if (mEntry.Strings.Get(PwDefs.NotesField) != null)
+                        {
+                            oldNote = mEntry.Strings.Get(PwDefs.NotesField).ReadString();
+                        }
+                        else
+                        {
+                            oldNote = "";
+                        }
+                        rtfEditor.Text = oldNote;
+                        title.Text = oldTitle;
+                        RecordEntryLastModificationTime();
+                       
+                    }
+                }
+                else
+                {
+                    panel1.Hide();
+                }
+
             }
         }
         public Control AllTextControl
@@ -99,48 +138,31 @@ namespace SecureNotesPlugin
                 mAllTextTab.Controls.Add(value);
             }
         }
-        public class EntryModifiedEventArgs : EventArgs
-        {
-            private readonly PwEntry[] mEntries;
+        
+        public Action NotifyHostOfModification;
 
-            public EntryModifiedEventArgs(IEnumerable<PwEntry> entries)
-            {
-                mEntries = entries.ToArray();
-            }
-
-            public EntryModifiedEventArgs(PwEntry entry)
-            {
-                mEntries = new[] { entry };
-            }
-
-            public IEnumerable<PwEntry> Entries
-            {
-                get { return mEntries; }
-            }
-        }
-        public event EventHandler<EntryModifiedEventArgs> EntryModified;
-        public void RefreshItems()
+        private string oldTitle = null;
+        private string oldNote = null;
+        public void saveEntry()
         {
-            //TODO
-        }
-        public void FinishEditing()
-        {
-            //TODO cancelledit
-        }
+            if (mEntry != null)
+            {
 
-        protected virtual void OnEntryChanged(EventArgs e)
-        {
-            
-            if (Entry == null)
-            {
-                panel1.Hide();
-            }
-            else
-            {
-                panel1.Show();
-                title.Text = mEntry.Strings.Get(PwDefs.TitleField).ReadString();
+                if (oldTitle != null && (oldTitle != title.Text || oldNote != rtfEditor.Text))
+                {
+                    mEntry.Strings.Set(PwDefs.TitleField, new ProtectedString(false, title.Text));
+                    mEntry.Strings.Set(PwDefs.NotesField, new ProtectedString(false, rtfEditor.Text));
+                  NotifyHostOfModification();
+                }
+                oldTitle = title.Text;
+                oldNote = rtfEditor.Text;
+ 
             }
         }
 
+        private void title_TextChanged(object sender, EventArgs e)
+        {
+            saveEntry();
+        }
     }
 }
