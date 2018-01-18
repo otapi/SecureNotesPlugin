@@ -8,8 +8,8 @@
     <ProjectGuid>{1A380CB5-B4DB-40C3-8348-64CD2597E78E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SecureNotesPlugin</RootNamespace>
-    <AssemblyName>SecureNotesPlugin</AssemblyName>
+    <RootNamespace>KeeNotesPlugin</RootNamespace>
+    <AssemblyName>KeeNotesPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -89,7 +89,7 @@
     <Compile Include="RTEControl.Designer.cs">
       <DependentUpon>RTEControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="SecureNotesPluginExt.cs" />
+    <Compile Include="KeeNotesPluginExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatusToolbar.cs" />
     <Compile Include="Util.cs" />

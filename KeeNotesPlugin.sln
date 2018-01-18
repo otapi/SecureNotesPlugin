@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureNotesPlugin", "SecureNotesPlugin.csproj", "{1A380CB5-B4DB-40C3-8348-64CD2597E78E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeeNotesPlugin", "KeeNotesPlugin.csproj", "{1A380CB5-B4DB-40C3-8348-64CD2597E78E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

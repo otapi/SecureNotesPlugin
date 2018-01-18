@@ -1,5 +1,5 @@
 ﻿/*
-  SecureNotesPlugin Plugin
+  KeeNotesPlugin Plugin
   Copyright (C) 2017 otapiGems <otapiGems@gmail.com>
 
   This program is free software; you can redistribute it and/or modify
@@ -30,9 +30,9 @@ using KeePass.UI;
 
 using KeePassLib;
 
-namespace SecureNotesPlugin
+namespace KeeNotesPlugin
 {
-	public sealed partial class SecureNotesPluginExt : Plugin
+	public sealed partial class KeeNotesPluginExt : Plugin
 	{
 		
         private const string m_ctseName = "m_toolMain";

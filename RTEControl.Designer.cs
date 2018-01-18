@@ -1,4 +1,4 @@
-﻿namespace SecureNotesPlugin
+﻿namespace KeeNotesPlugin
 {
     partial class RTEControl
     {

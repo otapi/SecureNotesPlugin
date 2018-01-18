@@ -27,9 +27,9 @@ using KeePassLib.Cryptography.PasswordGenerator;
 using KeePassLib.Security;
 using KeePassLib.Utility;
 
-namespace SecureNotesPlugin
+namespace KeeNotesPlugin
 {
-    partial class SecureNotesPluginExt
+    partial class KeeNotesPluginExt
     {
         class DragAndDropItems
         {

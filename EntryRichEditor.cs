@@ -9,9 +9,9 @@ using KeePass.UI;
 using System.Diagnostics;
 using System.Threading;
 
-namespace SecureNotesPlugin
+namespace KeeNotesPlugin
 {
-    partial class SecureNotesPluginExt
+    partial class KeeNotesPluginExt
     {
         class EntryRichEditor
         {

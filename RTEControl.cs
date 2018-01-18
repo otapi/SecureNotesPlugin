@@ -12,7 +12,7 @@ using KeePassLib;
 using KeePassLib.Security;
 using System.Windows.Forms.Integration;
 
-namespace SecureNotesPlugin
+namespace KeeNotesPlugin
 {
     public partial class RTEControl : UserControl
     {

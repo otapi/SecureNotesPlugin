@@ -7,9 +7,9 @@ using KeePassLib.Security;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace SecureNotesPlugin
+namespace KeeNotesPlugin
 {
-    partial class SecureNotesPluginExt
+    partial class KeeNotesPluginExt
     {
         
         class StatusToolbar

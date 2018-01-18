@@ -32,7 +32,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Timers;
 
-namespace SecureNotesPlugin
+namespace KeeNotesPlugin
 {
 // Workaround to allow listview scrolling during inline editing
 // Alternative maybe: http://www.codeproject.com/Tips/143450/How-to-scroll-a-parent-control-with-mouse-wheel-wh

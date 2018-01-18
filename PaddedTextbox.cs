@@ -32,7 +32,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Timers;
 
-namespace SecureNotesPlugin
+namespace KeeNotesPlugin
 {
     /// <summary>
     /// Padded TextBox
