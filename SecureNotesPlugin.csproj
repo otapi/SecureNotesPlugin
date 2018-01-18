@@ -68,6 +68,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WpfRichText, Version=1.0.16.0, Culture=neutral, PublicKeyToken=75ccead1e6af2af3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WPF-RichText-Editor\src\WpfRichText\bin\Debug\WpfRichText.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DragAndDropItems.cs" />
@@ -110,12 +114,6 @@
     <EmbeddedResource Include="RTEControl.resx">
       <DependentUpon>RTEControl.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WPF-RichText-Editor\src\WpfRichText\WpfRichText.csproj">
-      <Project>{78147c43-db7b-4571-bc7a-e7f0075b4b78}</Project>
-      <Name>WpfRichText</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
